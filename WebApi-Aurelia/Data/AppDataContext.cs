@@ -14,4 +14,13 @@ namespace WebApi_Aurelia.Data
             this.Configuration.ProxyCreationEnabled = false;
         }
     }
+
+    public class ExampleDataContext : DbContext
+    {
+        public ExampleDataContext()
+            : base("name=ExampleContext")
+        {
+            this.Configuration.ProxyCreationEnabled = false;
+        }
+    }
 }

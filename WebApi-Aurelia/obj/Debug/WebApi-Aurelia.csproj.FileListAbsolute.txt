@@ -91,3 +91,4 @@ c:\users\pgramajo.jbknowledge\documents\visual studio 2015\Projects\WebApi\WebAp
 c:\users\pgramajo.jbknowledge\documents\visual studio 2015\Projects\WebApi\WebApi-Aurelia\bin\System.Web.Cors.dll
 c:\users\pgramajo.jbknowledge\documents\visual studio 2015\Projects\WebApi\WebApi-Aurelia\bin\System.Web.Http.Cors.dll
 c:\users\pgramajo.jbknowledge\documents\visual studio 2015\Projects\WebApi\WebApi-Aurelia\bin\System.Web.Http.Cors.xml
+C:\Users\pgramajo.JBKNOWLEDGE\documents\visual studio 2015\Projects\WebApi\WebApi-Aurelia\bin\XmlDocument.xml

@@ -36,7 +36,7 @@ namespace WebApi_Aurelia.Controllers
         {
             using (var db = new AppDataContext())
             {
-                var people1 = db.Database.SqlQuery<Person>("GetAllPeople").Take(4).ToList();
+                var people1 = db.Database.SqlQuery<Person>("GetAllPeople").Take(100).ToList();
                 return Ok(new {peoplebd = people1, peoplestatic = people});
             }
             //   return Ok(new { peoplebd = people});
@@ -65,14 +65,20 @@ namespace WebApi_Aurelia.Controllers
         // POST: api/People
         public IHttpActionResult Post([FromBody] Person newPerson) //[FromBody] string value)
         {
-            newPerson.Id = this.people.Select(c => c.Id).Max() + 1;
-            this.people.ToList().Add(newPerson);
-            var response =
-                new HttpResponseMessage(HttpStatusCode
-                    .Created); //HttpResponseMessage<Person>(newPerson,HttpStatusCode.Created);
-            var relativePath = newPerson.Id.ToString();
-            response.Headers.Location = new Uri(Request.RequestUri, relativePath);
-            return Ok(new {person = newPerson});
+            //AddPersonTest
+            using (var db = new AppDataContext())
+            {
+                var newuserId = db.Database.SqlQuery<int>("AddPersonTest @FirstName, @LastName, @Email, @Username",
+                        new SqlParameter("@FirstName", newPerson.FirstName),
+                        new SqlParameter("@LastName", newPerson.LastName),
+                        new SqlParameter("@Email", newPerson.Email),
+                        new SqlParameter("@UserName", newPerson.UserName)
+                    )
+                    .FirstOrDefault();
+
+
+                return Ok(new {Id = newuserId});
+            }
         }
 
         // PUT: api/People/5

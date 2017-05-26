@@ -17,7 +17,8 @@ BEGIN
 			SET FirstName = @FirstName, LastName = @LastName,Email = @Email, UserName = @UserName
 			WHERE tblPerson.Id = @Id;
 
-		select 'ok'
+		select * from tblPerson where tblPerson.Id = @Id;
+
 
 	end try
 

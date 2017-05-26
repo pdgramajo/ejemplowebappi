@@ -97,7 +97,7 @@ namespace WebApi_Aurelia.Controllers
         {
             using (var db = new AppDataContext())
             {
-                var newuserId = db.Database.SqlQuery<string>(
+                var newuserId = db.Database.SqlQuery<Person>(
                         "EditPersonTest @FirstName, @LastName, @Email, @Username, @Id",
                         new SqlParameter("@FirstName", perdonedited.FirstName),
                         new SqlParameter("@LastName", perdonedited.LastName),
@@ -108,7 +108,7 @@ namespace WebApi_Aurelia.Controllers
                     .FirstOrDefault();
 
 
-                return Ok(new {edited = newuserId});
+                return Ok(new {person = newuserId});
             }
         }
 

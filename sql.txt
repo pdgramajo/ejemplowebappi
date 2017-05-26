@@ -1,0 +1,98 @@
+CREATE PROCEDURE EditPersonTest
+	-- Add the parameters for the stored procedure here
+	@FirstName varchar(200),
+	@LastName varchar(200),
+	@Email varchar(200),
+	@UserName varchar(200),
+	@Id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	begin try
+		set nocount, xact_abort on;
+		set transaction isolation level read uncommitted;
+		-- Insert statements for procedure here
+			UPDATE tblPerson
+			SET FirstName = @FirstName, LastName = @LastName,Email = @Email, UserName = @UserName
+			WHERE tblPerson.Id = @Id;
+
+		select 'ok'
+
+	end try
+
+	begin catch
+
+	  select 'error'
+
+	end catch;
+end
+
+************************************************************************************************************************
+
+CREATE PROCEDURE [dbo].[AddPersonTest] 
+	-- Add the parameters for the stored procedure here
+	@FirstName varchar(200),
+	@LastName varchar(200),
+	@Email varchar(200),
+	@UserName varchar(200)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+		  INSERT INTO dbo.tblPerson
+					  (
+						  SystemId,
+						  CompanyLocationId,
+						  FirstName,
+						  MiddleName,
+						  LastName,
+						   Email,
+						   Phone,
+						   Mobile,
+						   Fax,
+						   Title,
+						   UpdatedBy,
+						   UpdatedOn,
+						   RoleId,
+						   TimeZoneId,
+						   UserName,
+						   [Password],
+						   Salt,
+						   TextPass,
+						   ReceiveITB,
+						   ReceivePrequal,
+						   RegisteredOn,
+						   VerificationCode
+					   )
+		  VALUES      ( 
+						  158,
+						  1818325,
+						  @FirstName,
+						  'middle name',
+						  @LastName,
+						  @Email,
+						  'phone',
+						  'mobile',
+						  'fax',
+						  'title',
+						  'test react app',
+						  GETDATE(),
+						  0,
+						  48,
+						  @UserName,
+						  'A9287EC96080B0470A6841E4CD829D5BF719672C',
+						  'q6gH7PtQBIIZbA==',
+						  'merlin',
+						  0,
+						  0,
+						  GETDATE(),
+						  '123'
+					   )
+  DECLARE @PersonId INT = SCOPE_IDENTITY()
+
+  select @PersonId as Id ;
+
+END

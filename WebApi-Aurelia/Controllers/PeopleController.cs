@@ -36,7 +36,18 @@ namespace WebApi_Aurelia.Controllers
         {
             using (var db = new AppDataContext())
             {
-                var people1 = db.Database.SqlQuery<Person>("GetAllPeople").Take(100).ToList();
+                var people1 = db.Database.SqlQuery<Person>("GetAllPeople")
+                    .Take(100)
+                    .Select(item => new Person()
+                    {
+                        Id = item.Id,
+                        Key = item.Id.ToString(),
+                        FirstName = item.FirstName,
+                        LastName = item.LastName,
+                        Email = item.Email,
+                        UserName = item.UserName
+                    })
+                    .ToList();
                 return Ok(new {peoplebd = people1, peoplestatic = people});
             }
             //   return Ok(new { peoplebd = people});
@@ -82,8 +93,23 @@ namespace WebApi_Aurelia.Controllers
         }
 
         // PUT: api/People/5
-        public void Put(int id, [FromBody] string value)
+        public IHttpActionResult Put(int id, [FromBody] Person perdonedited)
         {
+            using (var db = new AppDataContext())
+            {
+                var newuserId = db.Database.SqlQuery<string>(
+                        "EditPersonTest @FirstName, @LastName, @Email, @Username, @Id",
+                        new SqlParameter("@FirstName", perdonedited.FirstName),
+                        new SqlParameter("@LastName", perdonedited.LastName),
+                        new SqlParameter("@Email", perdonedited.Email),
+                        new SqlParameter("@UserName", perdonedited.UserName),
+                        new SqlParameter("@Id", id)
+                    )
+                    .FirstOrDefault();
+
+
+                return Ok(new {edited = newuserId});
+            }
         }
 
         // DELETE: api/People/5
